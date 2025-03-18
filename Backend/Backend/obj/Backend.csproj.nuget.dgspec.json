@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hassa\\Desktop\\e-commerce\\Backend\\Backend\\Backend.csproj": {}
+    "C:\\Users\\hasan\\WorkArea\\e-commerce\\Backend\\Backend\\Backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hassa\\Desktop\\e-commerce\\Backend\\Backend\\Backend.csproj": {
+    "C:\\Users\\hasan\\WorkArea\\e-commerce\\Backend\\Backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hassa\\Desktop\\e-commerce\\Backend\\Backend\\Backend.csproj",
+        "projectUniqueName": "C:\\Users\\hasan\\WorkArea\\e-commerce\\Backend\\Backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "C:\\Users\\hassa\\Desktop\\e-commerce\\Backend\\Backend\\Backend.csproj",
-        "packagesPath": "C:\\Users\\hassa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hassa\\Desktop\\e-commerce\\Backend\\Backend\\obj\\",
+        "projectPath": "C:\\Users\\hasan\\WorkArea\\e-commerce\\Backend\\Backend\\Backend.csproj",
+        "packagesPath": "C:\\Users\\hasan\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\hasan\\WorkArea\\e-commerce\\Backend\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\hassa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\hasan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -25,7 +25,7 @@
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files\\dotnet\\library-packs": {},
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -57,6 +57,10 @@
             "FluentValidation": {
               "target": "Package",
               "version": "[11.11.0, )"
+            },
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.3.0, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
