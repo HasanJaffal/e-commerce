@@ -1,4 +1,5 @@
 import AppSideBar from "./components/AppSideBar/AppSideBar";
+import { Button } from "./components/ui/button";
 import "./index.css";
 function App() {
     return (
@@ -7,7 +8,9 @@ function App() {
             <div className="app-side-bar">
               <AppSideBar />
             </div>
-            <div className="app-body">APP BODY</div>
+            <div className="app-body">
+                <Button variant="destructive">Hi</Button>
+            </div>
             <div className="app-footer">APP FOOTER</div>
         </div>
     );
