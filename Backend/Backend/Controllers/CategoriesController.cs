@@ -19,15 +19,6 @@ namespace Backend.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetCategories()
-        {
-            var categories = await _service.GetCategoriesAsync();
-            var dtos = _mapper.Map<IEnumerable<CategoryDto>>(categories);
-            return Ok(dtos);
-            
-        }
-
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryDto createCategoryDto)
         {
@@ -42,5 +33,27 @@ namespace Backend.Controllers
 
             return Ok(category);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCategories()
+        {
+            var categories = await _service.GetCategoriesAsync();
+            var dtos = _mapper.Map<IEnumerable<CategoryDto>>(categories);
+            return Ok(dtos);
+            
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCategoryById(int id)
+        {
+            var category = await _service.GetCategoryByIdAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            var dto = _mapper.Map<CategoryDto>(category);
+            return Ok(dto);
+        }
+
     }
 }

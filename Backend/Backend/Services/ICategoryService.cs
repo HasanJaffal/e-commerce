@@ -7,5 +7,8 @@ namespace Backend.Services
     {
         Task<Category> CreateCategoryAsync(Category category);
         Task<IEnumerable<Category>> GetCategoriesAsync();
+        Task<Category> GetCategoryByIdAsync(int id);
+        Task<Category> UpdateCategoryAsync(Category category);
+        Task<bool> DeleteCategoryAsync(int id);
     }
 }

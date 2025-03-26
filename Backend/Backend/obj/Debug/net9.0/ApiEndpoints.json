@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "Backend.Controllers.CategoriesController",
+    "Method": "CreateCategory",
+    "RelativePath": "api/Categories",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createCategoryDto",
+        "Type": "Backend.Models.DTOs.CreateCategoryDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend.Controllers.CategoriesController",
     "Method": "GetCategories",
     "RelativePath": "api/Categories",
     "HttpMethod": "GET",
@@ -11,15 +27,15 @@
   },
   {
     "ContainingType": "Backend.Controllers.CategoriesController",
-    "Method": "CreateCategory",
-    "RelativePath": "api/Categories",
-    "HttpMethod": "POST",
+    "Method": "GetCategoryById",
+    "RelativePath": "api/Categories/{id}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "createCategoryDto",
-        "Type": "Backend.Models.DTOs.CreateCategoryDto",
+        "Name": "id",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
