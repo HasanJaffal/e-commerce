@@ -34,7 +34,7 @@ namespace Backend.Controllers
             return Ok(category);
         }
 
-        [HttpGet("Get")]
+        [HttpGet]
         public async Task<IActionResult> GetCategories()
         {
             var categories = await _service.GetCategoriesAsync();
@@ -43,7 +43,7 @@ namespace Backend.Controllers
             
         }
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
             var category = await _service.GetCategoryByIdAsync(id);
