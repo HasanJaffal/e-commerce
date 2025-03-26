@@ -2,7 +2,7 @@
   {
     "ContainingType": "Backend.Controllers.CategoriesController",
     "Method": "CreateCategory",
-    "RelativePath": "api/Categories",
+    "RelativePath": "api/Categories/Create",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -17,8 +17,24 @@
   },
   {
     "ContainingType": "Backend.Controllers.CategoriesController",
+    "Method": "DeleteCategory",
+    "RelativePath": "api/Categories/Delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend.Controllers.CategoriesController",
     "Method": "GetCategories",
-    "RelativePath": "api/Categories",
+    "RelativePath": "api/Categories/Get",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -28,7 +44,7 @@
   {
     "ContainingType": "Backend.Controllers.CategoriesController",
     "Method": "GetCategoryById",
-    "RelativePath": "api/Categories/{id}",
+    "RelativePath": "api/Categories/GetById/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -36,6 +52,27 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend.Controllers.CategoriesController",
+    "Method": "UpdateCategory",
+    "RelativePath": "api/Categories/Update/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateCategoryDto",
+        "Type": "Backend.Models.DTOs.UpdateCategoryDto",
         "IsRequired": true
       }
     ],
