@@ -68,7 +68,6 @@ namespace Backend.Controllers
             var categoryDto = _mapper.Map<CategoryDto>(updatedCategory);
             return Ok(categoryDto);
         }
-
         [HttpDelete("Delete/{id}")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
