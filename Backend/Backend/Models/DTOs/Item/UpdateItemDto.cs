@@ -1,11 +1,9 @@
-﻿namespace Backend.Models.DTOs
+﻿namespace Backend.Models.DTOs.Item
 {
-    public class ItemDto
+    public class UpdateItemDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public int ImageId { get; set; }
         public int CategoryId { get; set; }
     }
 }

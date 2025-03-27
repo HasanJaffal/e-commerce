@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Backend.Models.Domain;
 using Backend.Models.DTOs;
+using Backend.Models.DTOs.Category;
+using Backend.Models.DTOs.Item;
 using Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 

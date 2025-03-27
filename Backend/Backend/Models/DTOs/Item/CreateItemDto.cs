@@ -1,4 +1,4 @@
-﻿namespace Backend.Models.DTOs
+﻿namespace Backend.Models.DTOs.Item
 {
     public class CreateItemDto
     {

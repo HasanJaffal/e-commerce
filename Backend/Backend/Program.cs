@@ -18,8 +18,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddAutoMapper(typeof(CategoryProfile));
 builder.Services.AddAutoMapper(typeof(ItemProfile));
+builder.Services.AddAutoMapper(typeof(ImageProfile));
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddHttpClient<IImageService, ImageService>();
 
 builder.Services.AddCors(options =>
 {

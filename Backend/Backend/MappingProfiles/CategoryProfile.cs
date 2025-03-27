@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Backend.Models.Domain;
-using Backend.Models.DTOs;
+using Backend.Models.DTOs.Category;
 
 namespace Backend.MappingProfiles
 {

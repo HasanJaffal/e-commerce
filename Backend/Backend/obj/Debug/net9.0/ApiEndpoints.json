@@ -67,7 +67,7 @@
     "Parameters": [
       {
         "Name": "createCategoryDto",
-        "Type": "Backend.Models.DTOs.CreateCategoryDto",
+        "Type": "Backend.Models.DTOs.Category.CreateCategoryDto",
         "IsRequired": true
       }
     ],
@@ -104,8 +104,29 @@
       },
       {
         "Name": "updateCategoryDto",
-        "Type": "Backend.Models.DTOs.UpdateCategoryDto",
+        "Type": "Backend.Models.DTOs.Category.UpdateCategoryDto",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend.Controllers.ImagesController",
+    "Method": "UploadImage",
+    "RelativePath": "api/Images/Upload",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Image",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "ItemId",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
