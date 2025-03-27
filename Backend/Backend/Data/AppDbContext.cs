@@ -21,14 +21,9 @@ namespace Backend.Data
                 .HasForeignKey(i => i.CategoryId);
 
             modelBuilder.Entity<Item>()
-                .HasOne(item => item.Image)
+                .HasOne(i => i.Image)
                 .WithOne(img => img.Item)
                 .HasForeignKey<Image>(img => img.ItemId);
-
-            modelBuilder.Entity<Image>()
-                .HasOne(img => img.Item)
-                .WithOne(item => item.Image)
-                .HasForeignKey<Item>(item => item.ImageId);
         }
     }
 }

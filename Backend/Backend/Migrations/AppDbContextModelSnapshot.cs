@@ -59,6 +59,9 @@ namespace Backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ItemId")
+                        .IsUnique();
+
                     b.ToTable("Images");
                 });
 
@@ -73,9 +76,6 @@ namespace Backend.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ImageId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -87,10 +87,18 @@ namespace Backend.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("ImageId")
-                        .IsUnique();
-
                     b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("Backend.Models.Domain.Image", b =>
+                {
+                    b.HasOne("Backend.Models.Domain.Item", "Item")
+                        .WithOne("Image")
+                        .HasForeignKey("Backend.Models.Domain.Image", "ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Backend.Models.Domain.Item", b =>
@@ -101,13 +109,7 @@ namespace Backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Backend.Models.Domain.Image", "Image")
-                        .WithOne("Item")
-                        .HasForeignKey("Backend.Models.Domain.Item", "ImageId");
-
                     b.Navigation("Category");
-
-                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("Backend.Models.Domain.Category", b =>
@@ -115,9 +117,9 @@ namespace Backend.Migrations
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("Backend.Models.Domain.Image", b =>
+            modelBuilder.Entity("Backend.Models.Domain.Item", b =>
                 {
-                    b.Navigation("Item")
+                    b.Navigation("Image")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
