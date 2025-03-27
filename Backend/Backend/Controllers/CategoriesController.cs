@@ -35,12 +35,22 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCategories()
+        public async Task<IActionResult> GetCategories([FromQuery] QueryRequest queryRequest)
         {
-            var categories = await _service.GetCategoriesAsync();
+            var categoriesResponse = await _service.GetCategoriesAsync(queryRequest);
+            var categories = categoriesResponse.Objects;
             var dtos = _mapper.Map<IEnumerable<CategoryDto>>(categories);
-            return Ok(dtos);
-            
+
+            var finalResponse = new QueryResponse<CategoryDto>
+            {
+                Objects = dtos,
+                TotalCount = categoriesResponse.TotalCount,
+                TotalPages = categoriesResponse.TotalPages,
+                CurrentPage = categoriesResponse.CurrentPage,
+                PageSize = categoriesResponse.PageSize
+            };
+
+            return Ok(finalResponse);
         }
 
         [HttpGet("{id}")]
@@ -68,8 +78,9 @@ namespace Backend.Controllers
             var categoryDto = _mapper.Map<CategoryDto>(updatedCategory);
             return Ok(categoryDto);
         }
+
         [HttpDelete("Delete/{id}")]
-        public async Task<ActionResult> DeleteCategory(int id)
+        public async Task<IActionResult> DeleteCategory(int id)
         {
             var result = await _service.DeleteCategoryAsync(id);
             if (!result)
@@ -77,6 +88,14 @@ namespace Backend.Controllers
                 return NotFound();
             }
             return NoContent();
+        }
+
+        [HttpGet("{id}/Items")]
+        public async Task<IActionResult> GetItemsByCategoryId(int id)
+        {
+            var items = await _service.GetItemsByCategoryId(id);
+            var dtos = _mapper.Map<IEnumerable<ItemDto>>(items);
+            return Ok(dtos);
         }
     }
 }

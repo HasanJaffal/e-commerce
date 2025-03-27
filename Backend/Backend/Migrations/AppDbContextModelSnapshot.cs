@@ -73,7 +73,7 @@ namespace Backend.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
@@ -103,9 +103,7 @@ namespace Backend.Migrations
 
                     b.HasOne("Backend.Models.Domain.Image", "Image")
                         .WithOne("Item")
-                        .HasForeignKey("Backend.Models.Domain.Item", "ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Backend.Models.Domain.Item", "ImageId");
 
                     b.Navigation("Category");
 

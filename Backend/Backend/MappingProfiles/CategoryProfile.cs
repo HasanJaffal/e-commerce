@@ -9,8 +9,8 @@ namespace Backend.MappingProfiles
         public CategoryProfile()
         {
             CreateMap<CreateCategoryDto, Category>();
-            CreateMap<Category, CategoryDto>();
             CreateMap<UpdateCategoryDto, Category>();
+            CreateMap<Category, CategoryDto>();
         }
     }
 }
