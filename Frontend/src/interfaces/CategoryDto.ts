@@ -1,4 +1,4 @@
-export interface Item {
+export interface CategoryDto {
     id: number;
     name: string;
     description: string;

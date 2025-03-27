@@ -1,22 +1,23 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./AppSideBar.css";
-import { Item } from "../../interfaces/Item";
+import { QueryResponse } from "@/interfaces/QueryResponse";
+import { CategoryDto } from "@/interfaces/CategoryDto";
 
 function AppSideBar() {
-    const [items, setItems] = useState<Item[]>([]);
+    const [categories, setCategories] = useState<CategoryDto[]>([]);
 
     useEffect(() => {
         axios
-            .get<Item[]>("https://localhost:7206/api/Categories")
-            .then((response) => setItems(response.data))
+            .get<QueryResponse<CategoryDto>>("https://localhost:7206/api/Categories")
+            .then((response) => setCategories(response.data.objects))
             .catch((error) => console.error("Error fetching data:", error));
     }, []);
 
     return (
         <div className="container">
-            {items.map((item) => (
-                <button className="item-button" key={item.id}>{item.name}</button>
+            {categories.map((category) => (
+                <button className="category-button" key={category.id}>{category.name}</button>
             ))}
         </div>
     );
