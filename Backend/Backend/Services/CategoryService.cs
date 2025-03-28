@@ -26,10 +26,19 @@ namespace Backend.Services
         {
             var totalCategories = await _context.Categories.CountAsync();
 
+            var filteredCategories = new List<Category>();
+
             // Filtering
-            var filteredCategories = await _context.Categories
-                .Where(x => x.Name.ToUpper().Contains(queryRequest.Serach.ToUpper() ?? ""))
-                .ToListAsync();
+            if (queryRequest.Serach != null)
+            {
+                filteredCategories = await _context.Categories
+                    .Where(x => x.Name.ToUpper().Contains(queryRequest.Serach.ToUpper()))
+                    .ToListAsync();
+            }
+            else
+            {
+                filteredCategories = await _context.Categories.ToListAsync();
+            }
 
             // Pagination
             var skip = (queryRequest.Page - 1) * queryRequest.PageSize;

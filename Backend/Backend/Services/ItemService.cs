@@ -24,11 +24,19 @@ namespace Backend.Services
         public async Task<QueryResponse<Item>> GetItemsAsync(QueryRequest queryRequest)
         {
             var totalItems = await _context.Items.CountAsync();
+            var filteredItems = new List<Item>();
 
             // Filtering
-            var filteredItems = await _context.Items
-                .Where(x => x.Name.ToUpper().Contains(queryRequest.Serach.ToUpper() ?? ""))
-                .ToListAsync();
+            if (queryRequest.Serach != null)
+            {
+                filteredItems = await _context.Items
+                    .Where(x => x.Name.ToUpper().Contains(queryRequest.Serach.ToUpper()))
+                    .ToListAsync();
+            }
+            else
+            {
+                filteredItems = await _context.Items.ToListAsync();
+            }
 
             // Pagination
             var skip = (queryRequest.Page - 1) * queryRequest.PageSize;
