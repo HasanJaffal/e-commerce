@@ -28,7 +28,7 @@ namespace Backend.Services
 
             // Filtering
             var filteredCategories = await _context.Categories
-                .Where(x => x.Name.Contains(queryRequest.Serach ?? ""))
+                .Where(x => x.Name.ToUpper().Contains(queryRequest.Serach.ToUpper() ?? ""))
                 .ToListAsync();
 
             // Pagination

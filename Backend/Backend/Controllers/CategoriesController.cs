@@ -33,7 +33,7 @@ namespace Backend.Controllers
             var createdCategory = await _service.CreateCategoryAsync(category);
             var categoryDto = _mapper.Map<CategoryDto>(createdCategory);
 
-            return Ok(category);
+            return Ok(categoryDto);
         }
 
         [HttpGet]

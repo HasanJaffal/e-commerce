@@ -22,6 +22,7 @@ builder.Services.AddAutoMapper(typeof(ImageProfile));
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddHttpClient<IImageService, ImageService>();
+builder.Services.AddScoped<IItemService, ItemService>();         
 
 builder.Services.AddCors(options =>
 {
