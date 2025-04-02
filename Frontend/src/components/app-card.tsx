@@ -1,23 +1,25 @@
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
+import { DisplayItem } from '@/interfaces/display/DisplayItem';
 
-type Product = {
-    image: string;
-    name: string;
-    price: string;
-};
+interface Props {
+    displayItem: DisplayItem;
+    className?: string;
+}
 
-type CardProps = React.ComponentProps<typeof Card> & {
-    product: Product;
-};
-
-export function CardDemo({ className, product }: CardProps) {
+export function CardDemo({ displayItem, className }: Props) {
     return (
-        <Card className={cn('w-[300px] p-4', className)}>
-            <CardContent className="flex flex-col items-center space-y-4">
-                <img src={product.image} alt={product.name} className="w-40 h-40 object-cover rounded-md" />
-                <h2 className="text-lg font-semibold">{product.name}</h2>
-                <p className="text-xl font-bold text-green-600">{product.price}</p>
+        <Card className={cn('w-[240px] p-4', className)}>
+            <CardContent className='flex flex-col items-center space-y-2'>
+                <img
+                    src={displayItem.imageUrl}
+                    alt={displayItem.item.name}
+                    className='w-40 h-40 object-cover rounded-md'
+                />
+                <h2 className='text-lg font-bold'>{displayItem.item.name}</h2>
+                <p className='text-xl font-bold text-green-600'>
+                    ${displayItem.item.price}
+                </p>
             </CardContent>
         </Card>
     );

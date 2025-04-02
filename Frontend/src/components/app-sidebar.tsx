@@ -8,7 +8,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { CategoryDto } from '@/interfaces/CategoryDto';
+import { CategoryDto } from '@/interfaces/backend/CategoryDto';
 
 interface Props {
     categories: CategoryDto[];
@@ -28,7 +28,7 @@ export function AppSidebar({ categories }: Props) {
                                     className='hover:bg-gray-700 focus:ring-2 focus:ring-blue-500'
                                 >
                                     <SidebarMenuButton asChild>
-                                        <a href='#'>
+                                        <a href={`/categories/${c.name}`}>
                                             <span>{c.name}</span>
                                         </a>
                                     </SidebarMenuButton>

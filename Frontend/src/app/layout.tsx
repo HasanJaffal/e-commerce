@@ -2,8 +2,8 @@ import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { CategoryDto } from '@/interfaces/CategoryDto';
-import { QueryResponse } from '@/interfaces/QueryResponse';
+import { CategoryDto } from '@/interfaces/backend/CategoryDto';
+import { QueryResponse } from '@/interfaces/backend/QueryResponse';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const [categories, setCategories] = useState<CategoryDto[]>([]);
@@ -18,11 +18,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 console.log(categories);
             })
             .catch((error) => console.error('Error fetching data:', error));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (
         <SidebarProvider>
-            <AppSidebar categories={categories}/>
+            <AppSidebar categories={categories} />
             <main>
                 <SidebarTrigger />
                 {children}
