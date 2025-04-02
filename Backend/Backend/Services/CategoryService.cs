@@ -9,7 +9,7 @@ namespace Backend.Services
 {
     public class CategoryService : ICategoryService
     {
-        private static AppDbContext _context;
+        private readonly AppDbContext _context;
         public CategoryService(AppDbContext context)
         {
             _context = context;
@@ -29,10 +29,10 @@ namespace Backend.Services
             var filteredCategories = new List<Category>();
 
             // Filtering
-            if (queryRequest.Serach != null)
+            if (queryRequest.Search != null)
             {
                 filteredCategories = await _context.Categories
-                    .Where(x => x.Name.ToUpper().Contains(queryRequest.Serach.ToUpper()))
+                    .Where(x => x.Name.ToUpper().Contains(queryRequest.Search.ToUpper()))
                     .ToListAsync();
             }
             else

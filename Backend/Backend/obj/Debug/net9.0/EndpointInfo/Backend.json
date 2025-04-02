@@ -43,7 +43,7 @@
         ],
         "parameters": [
           {
-            "name": "Serach",
+            "name": "Search",
             "in": "query",
             "schema": {
               "type": "string"
@@ -260,7 +260,7 @@
         ],
         "parameters": [
           {
-            "name": "Serach",
+            "name": "Search",
             "in": "query",
             "schema": {
               "type": "string"

@@ -8,7 +8,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Serach",
+        "Name": "Search",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -140,7 +140,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Serach",
+        "Name": "Search",
         "Type": "System.String",
         "IsRequired": false
       },

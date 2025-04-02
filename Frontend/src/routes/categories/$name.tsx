@@ -1,4 +1,4 @@
-import { CardDemo } from '@/components/app-card';
+import { AppCard } from '@/components/app-card';
 import { ImageDto } from '@/interfaces/backend/ImageDto';
 import { ItemDto } from '@/interfaces/backend/ItemDto';
 import { DisplayItem } from '@/interfaces/display/DisplayItem';
@@ -17,9 +17,7 @@ function Category() {
 
     useEffect(() => {
         axios
-            .get(
-                `https://localhost:7206/api/Categories/${name}/Items`
-            )
+            .get(`https://localhost:7206/api/Categories/${name}/Items`)
             .then((response) => {
                 setItems(response.data);
             })
@@ -35,7 +33,7 @@ function Category() {
                     items.map(async (item) => ({
                         item,
                         imageUrl: await getImage(item.id),
-                    }))
+                    })),
                 );
 
                 setDisplayItems(newFormat);
@@ -50,7 +48,7 @@ function Category() {
     const getImage = async (itemId: number): Promise<string> => {
         try {
             const response = await axios.get<ImageDto>(
-                `https://localhost:7206/api/Items/${itemId}/image`
+                `https://localhost:7206/api/Items/${itemId}/image`,
             );
             return response.data.url || '';
         } catch (error) {
@@ -61,13 +59,13 @@ function Category() {
 
     return (
         <div>
-            <h1 className="text-2xl font-bold">{name.toUpperCase()}</h1>
+            <h1 className='text-2xl font-bold'>{name.toUpperCase()}</h1>
             {displayItems.length === 0 ? (
                 <p>No items available in this category.</p>
             ) : (
-                <div className="grid grid-cols-2 gap-4">
+                <div className='grid grid-cols-2 gap-4'>
                     {displayItems.map((i) => (
-                        <CardDemo key={i.item.id} displayItem={i} />
+                        <AppCard key={i.item.id} displayItem={i} />
                     ))}
                 </div>
             )}

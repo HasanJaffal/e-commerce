@@ -52,6 +52,11 @@ namespace Backend.Controllers
                 PageSize = categoriesResponse.PageSize
             };
 
+            if (finalResponse.Objects.Count() == 0)
+            {
+                return NoContent();
+            }
+
             return Ok(finalResponse);
         }
 
@@ -97,6 +102,10 @@ namespace Backend.Controllers
         {
             var items = await _service.GetItemsByCategoryName(name);
             var dtos = _mapper.Map<IEnumerable<ItemDto>>(items);
+            if (dtos.Count() == 0)
+            {
+                return NoContent();
+            }
             return Ok(dtos);
         }
     }

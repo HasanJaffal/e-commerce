@@ -7,7 +7,7 @@ interface Props {
     className?: string;
 }
 
-export function CardDemo({ displayItem, className }: Props) {
+export function AppCard({ displayItem, className }: Props) {
     return (
         <Card className={cn('w-[240px] p-4', className)}>
             <CardContent className='flex flex-col items-center space-y-2'>

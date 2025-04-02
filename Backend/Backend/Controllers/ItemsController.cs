@@ -52,6 +52,11 @@ namespace Backend.Controllers
                 PageSize = itemsResponse.PageSize
             };
 
+            if (finalResponse.Objects.Count() == 0)
+            {
+                return NoContent();
+            }
+
             return Ok(finalResponse);
         }
 

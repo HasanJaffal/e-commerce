@@ -9,7 +9,7 @@ namespace Backend.Services
 {
     public class ItemService : IItemService
     {
-        private static AppDbContext _context;
+        private readonly AppDbContext _context;
         public ItemService(AppDbContext context)
         {
             _context = context;
@@ -28,10 +28,10 @@ namespace Backend.Services
             var filteredItems = new List<Item>();
 
             // Filtering
-            if (queryRequest.Serach != null)
+            if (queryRequest.Search != null)
             {
                 filteredItems = await _context.Items
-                    .Where(x => x.Name.ToUpper().Contains(queryRequest.Serach.ToUpper()))
+                    .Where(x => x.Name.ToUpper().Contains(queryRequest.Search.ToUpper()))
                     .ToListAsync();
             }
             else

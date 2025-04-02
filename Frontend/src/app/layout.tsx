@@ -4,9 +4,12 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { CategoryDto } from '@/interfaces/backend/CategoryDto';
 import { QueryResponse } from '@/interfaces/backend/QueryResponse';
+import { AppSearchBar } from '@/components/app-search-bar';
+import { QueryRequest } from '@/interfaces/backend/QueryRequest';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const [categories, setCategories] = useState<CategoryDto[]>([]);
+    const [queryRequest, setQueryRequest] = useState<QueryRequest>();
 
     useEffect(() => {
         axios
@@ -24,7 +27,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <SidebarProvider>
             <AppSidebar categories={categories} />
             <main>
-                <SidebarTrigger />
+                <div className='display-flex w-lg'>
+                    <SidebarTrigger />
+                    <AppSearchBar search={queryRequest?.search}/>
+                </div>
                 {children}
             </main>
         </SidebarProvider>
