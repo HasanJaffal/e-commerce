@@ -10,6 +10,6 @@ namespace Backend.Services
         Task<Category> GetCategoryByIdAsync(int id);
         Task<Category> UpdateCategoryAsync(Category category);
         Task<bool> DeleteCategoryAsync(int id);
-        Task<IEnumerable<Item>> GetItemsByCategoryId(int id);
+        Task<IEnumerable<Item>> GetItemsByCategoryName(string name);
     }
 }

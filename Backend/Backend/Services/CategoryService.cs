@@ -79,10 +79,11 @@ namespace Backend.Services
             await _context.SaveChangesAsync();
             return true;
         }
-
-        public async Task<IEnumerable<Item>> GetItemsByCategoryId(int id)
+        public async Task<IEnumerable<Item>> GetItemsByCategoryName(string name)
         {
-            return await _context.Items.Where(item => item.CategoryId == id).ToListAsync();
+            return await _context.Items
+                .Where(item => item.Category.Name.ToLower().Equals(name.ToLower()))
+                .ToListAsync();
         }
     }
 }

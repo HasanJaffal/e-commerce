@@ -92,10 +92,10 @@ namespace Backend.Controllers
             return NoContent();
         }
 
-        [HttpGet("{id}/Items")]
-        public async Task<IActionResult> GetItemsByCategoryId(int id)
+        [HttpGet("{name}/Items")]
+        public async Task<IActionResult> GetItemsByCategoryName(string name)
         {
-            var items = await _service.GetItemsByCategoryId(id);
+            var items = await _service.GetItemsByCategoryName(name);
             var dtos = _mapper.Map<IEnumerable<ItemDto>>(items);
             return Ok(dtos);
         }

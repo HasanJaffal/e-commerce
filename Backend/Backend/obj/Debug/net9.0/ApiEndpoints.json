@@ -43,15 +43,15 @@
   },
   {
     "ContainingType": "Backend.Controllers.CategoriesController",
-    "Method": "GetItemsByCategoryId",
-    "RelativePath": "api/Categories/{id}/Items",
+    "Method": "GetItemsByCategoryName",
+    "RelativePath": "api/Categories/{name}/Items",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
-        "Type": "System.Int32",
+        "Name": "name",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

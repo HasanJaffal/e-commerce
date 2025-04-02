@@ -161,19 +161,18 @@
         }
       }
     },
-    "/api/Categories/{id}/Items": {
+    "/api/Categories/{name}/Items": {
       "get": {
         "tags": [
           "Categories"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "name",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
