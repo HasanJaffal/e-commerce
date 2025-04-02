@@ -1,6 +1,7 @@
 ﻿using Backend.Data;
 using Backend.Models.Domain;
 using Backend.Models.DTOs;
+using Backend.Models.DTOs.Image;
 using Backend.Models.DTOs.Item;
 using Microsoft.EntityFrameworkCore;
 
@@ -76,6 +77,12 @@ namespace Backend.Services
             _context.Items.Remove(item);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<Image> GetImageByItemIdAsync(int itemId)
+        {
+            var image = await _context.Images.FirstOrDefaultAsync(x => x.ItemId == itemId);
+            return image;
         }
     }
 }

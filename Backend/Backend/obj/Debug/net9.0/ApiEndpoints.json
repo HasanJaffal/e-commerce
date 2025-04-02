@@ -175,6 +175,22 @@
   },
   {
     "ContainingType": "Backend.Controllers.ItemsController",
+    "Method": "GetImageByItemId",
+    "RelativePath": "api/Items/{itemId}/image",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "itemId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Backend.Controllers.ItemsController",
     "Method": "CreateItem",
     "RelativePath": "api/Items/Create",
     "HttpMethod": "POST",

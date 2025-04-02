@@ -4,6 +4,7 @@ using Backend.Models.DTOs;
 using Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Backend.Models.DTOs.Item;
+using Backend.Models.DTOs.Image;
 
 namespace Backend.Controllers
 {
@@ -89,6 +90,18 @@ namespace Backend.Controllers
                 return NotFound();
             }
             return NoContent();
+        }
+
+        [HttpGet("{itemId}/image")]
+        public async Task<IActionResult> GetImageByItemId(int itemId)
+        {
+            var image = await _service.GetImageByItemIdAsync(itemId);
+            if (image == null)
+            {
+                return NotFound();
+            }
+            var dto = _mapper.Map<ImageDto>(image);
+            return Ok(dto);
         }
     }
 }
