@@ -43,12 +43,27 @@
   },
   {
     "ContainingType": "Backend.Controllers.CategoriesController",
-    "Method": "GetItemsByCategoryName",
+    "Method": "GetItems",
     "RelativePath": "api/Categories/{name}/Items",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
+      {
+        "Name": "Search",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
       {
         "Name": "name",
         "Type": "System.String",
@@ -125,32 +140,6 @@
       },
       {
         "Name": "ItemId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend.Controllers.ItemsController",
-    "Method": "GetItems",
-    "RelativePath": "api/Items",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Search",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Page",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "PageSize",
         "Type": "System.Int32",
         "IsRequired": false
       }

@@ -36,30 +36,6 @@ namespace Backend.Controllers
             return Ok(itemDto);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetItems([FromQuery] QueryRequest queryRequest)
-        {
-            var itemsResponse = await _service.GetItemsAsync(queryRequest);
-            var items = itemsResponse.Objects;
-            var dtos = _mapper.Map<IEnumerable<ItemDto>>(items);
-
-            var finalResponse = new QueryResponse<ItemDto>
-            {
-                Objects = dtos,
-                TotalCount = itemsResponse.TotalCount,
-                TotalPages = itemsResponse.TotalPages,
-                CurrentPage = itemsResponse.CurrentPage,
-                PageSize = itemsResponse.PageSize
-            };
-
-            if (finalResponse.Objects.Count() == 0)
-            {
-                return NoContent();
-            }
-
-            return Ok(finalResponse);
-        }
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetItemById(int id)
         {
@@ -103,10 +79,17 @@ namespace Backend.Controllers
             var image = await _service.GetImageByItemIdAsync(itemId);
             if (image == null)
             {
-                return NotFound();
+                return Ok(new ImageDto()
+                {
+                    Id = 0,
+                    Url = "https://d1nhio0ox7pgb.cloudfront.net/_img/v_collection_png/512x512/shadow/box_white_surprise.png",
+                    ItemId = itemId
+                });
             }
+
             var dto = _mapper.Map<ImageDto>(image);
             return Ok(dto);
         }
+
     }
 }

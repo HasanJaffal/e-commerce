@@ -67,7 +67,6 @@ namespace Backend.Services
             await _context.SaveChangesAsync();
             return category;
         }
-
         public async Task<bool> DeleteCategoryAsync(int id)
         {
             var category = await _context.Categories.FindAsync(id);
@@ -79,11 +78,38 @@ namespace Backend.Services
             await _context.SaveChangesAsync();
             return true;
         }
-        public async Task<IEnumerable<Item>> GetItemsByCategoryName(string name)
+        public async Task<QueryResponse<Item>> GetItemsAsync(QueryRequest queryRequest, string categoryName)
         {
-            return await _context.Items
-                .Where(item => item.Category.Name.ToLower().Equals(name.ToLower()))
-                .ToListAsync();
+            var totalItems = await _context.Items.Where(x => x.Name.ToUpper().Equals(categoryName.ToUpper())).CountAsync();
+            var filteredItems = new List<Item>();
+
+            // Filtering
+            if (queryRequest.Search != null)
+            {
+                filteredItems = await _context.Items
+                    .Where(x => x.Category.Name.ToUpper().Equals(categoryName.ToUpper()) && x.Name.ToUpper().Contains(queryRequest.Search.ToUpper()))
+                    .ToListAsync();
+            }
+            else
+            {
+                filteredItems = await _context.Items
+                    .Where(x => x.Category.Name.ToUpper().Equals(categoryName.ToUpper())).ToListAsync();
+            }
+
+            // Pagination
+            var skip = (queryRequest.Page - 1) * queryRequest.PageSize;
+            var pagedItems = filteredItems.Skip(skip).Take(queryRequest.PageSize);
+
+            var response = new QueryResponse<Item>
+            {
+                Objects = pagedItems,
+                TotalCount = totalItems,
+                PageSize = queryRequest.PageSize,
+                CurrentPage = queryRequest.Page,
+                TotalPages = (int)Math.Ceiling((double)totalItems / queryRequest.PageSize)
+            };
+
+            return response;
         }
     }
 }

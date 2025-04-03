@@ -98,15 +98,27 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{name}/Items")]
-        public async Task<IActionResult> GetItemsByCategoryName(string name)
+        public async Task<IActionResult> GetItems([FromQuery] QueryRequest queryRequest, [FromRoute]string name)
         {
-            var items = await _service.GetItemsByCategoryName(name);
+            var itemsResponse = await _service.GetItemsAsync(queryRequest, name);
+            var items = itemsResponse.Objects;
             var dtos = _mapper.Map<IEnumerable<ItemDto>>(items);
-            if (dtos.Count() == 0)
+
+            var finalResponse = new QueryResponse<ItemDto>
+            {
+                Objects = dtos,
+                TotalCount = itemsResponse.TotalCount,
+                TotalPages = itemsResponse.TotalPages,
+                CurrentPage = itemsResponse.CurrentPage,
+                PageSize = itemsResponse.PageSize
+            };
+
+            if (finalResponse.Objects.Count() == 0)
             {
                 return NoContent();
             }
-            return Ok(dtos);
+
+            return Ok(finalResponse);
         }
     }
 }

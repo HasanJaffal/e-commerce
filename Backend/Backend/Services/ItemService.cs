@@ -10,6 +10,7 @@ namespace Backend.Services
     public class ItemService : IItemService
     {
         private readonly AppDbContext _context;
+        private readonly IImageService _imageService;
         public ItemService(AppDbContext context)
         {
             _context = context;
@@ -20,39 +21,6 @@ namespace Backend.Services
             await _context.Items.AddAsync(item);
             await _context.SaveChangesAsync();
             return item;
-        }
-
-        public async Task<QueryResponse<Item>> GetItemsAsync(QueryRequest queryRequest)
-        {
-            var totalItems = await _context.Items.CountAsync();
-            var filteredItems = new List<Item>();
-
-            // Filtering
-            if (queryRequest.Search != null)
-            {
-                filteredItems = await _context.Items
-                    .Where(x => x.Name.ToUpper().Contains(queryRequest.Search.ToUpper()))
-                    .ToListAsync();
-            }
-            else
-            {
-                filteredItems = await _context.Items.ToListAsync();
-            }
-
-            // Pagination
-            var skip = (queryRequest.Page - 1) * queryRequest.PageSize;
-            var pagedItems = filteredItems.Skip(skip).Take(queryRequest.PageSize);
-
-            var response = new QueryResponse<Item>
-            {
-                Objects = pagedItems,
-                TotalCount = totalItems,
-                PageSize = queryRequest.PageSize,
-                CurrentPage = queryRequest.Page,
-                TotalPages = (int)Math.Ceiling((double)totalItems / queryRequest.PageSize)
-            };
-
-            return response;
         }
 
         public async Task<Item> GetItemByIdAsync(int id)
