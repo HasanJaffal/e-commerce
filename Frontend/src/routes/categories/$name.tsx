@@ -1,6 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { AppCard } from '@/components/app-card';
+import { AppSearchBar } from '@/components/app-search-bar';
 import { ImageDto } from '@/interfaces/backend/ImageDto';
 import { ItemDto } from '@/interfaces/backend/ItemDto';
+import { QueryRequest } from '@/interfaces/backend/QueryRequest';
+import { QueryResponse } from '@/interfaces/backend/QueryResponse';
 import { DisplayItem } from '@/interfaces/display/DisplayItem';
 import { createFileRoute } from '@tanstack/react-router';
 import axios from 'axios';
@@ -14,15 +18,26 @@ function Category() {
     const { name } = Route.useParams();
     const [items, setItems] = useState<ItemDto[]>([]);
     const [displayItems, setDisplayItems] = useState<DisplayItem[]>([]);
+    const [queryRequest, setQueryRequest] = useState<QueryRequest>({
+        search: '',
+        page: 1,
+        pageSize: 100,
+    });
 
     useEffect(() => {
-        axios
-            .get(`https://localhost:7206/api/Categories/${name}/Items`)
-            .then((response) => {
-                setItems(response.data);
-            })
-            .catch((error) => console.error('Error fetching items:', error));
-    }, []);
+        const fetchItems = async () => {
+            try {
+                const response = await axios.get<QueryResponse<ItemDto>>(
+                    `https://localhost:7206/api/Categories/${name}/Items?Search=${queryRequest.search}&Page=${queryRequest.page}&PageSize=${queryRequest.pageSize}`,
+                );
+                console.log(response.data.objects);
+                setItems(response.data.objects);
+            } catch (error) {
+                console.error('Error fetching items:', error);
+            }
+        };
+        fetchItems();
+    }, [queryRequest, name]);
 
     useEffect(() => {
         const fetchImages = async () => {
@@ -41,9 +56,16 @@ function Category() {
                 console.error('Error processing images:', error);
             }
         };
-
         fetchImages();
     }, [items]);
+
+    const handleSearch = (search: string) => {
+        setQueryRequest((prevQueryRequest) => ({
+            ...prevQueryRequest,
+            search: search,
+            page: 1,
+        }));
+    };
 
     const getImage = async (itemId: number): Promise<string> => {
         try {
@@ -59,6 +81,7 @@ function Category() {
 
     return (
         <div>
+            <AppSearchBar onClick={handleSearch} />
             <h1 className='text-2xl font-bold'>{name.toUpperCase()}</h1>
             {displayItems.length === 0 ? (
                 <p>No items available in this category.</p>

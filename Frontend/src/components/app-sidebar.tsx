@@ -25,9 +25,9 @@ export function AppSidebar({ categories }: Props) {
                             {categories.map((c) => (
                                 <SidebarMenuItem
                                     key={c.id}
-                                    className='hover:bg-gray-700 focus:ring-2 focus:ring-blue-500'
+                                    className='hover:bg-gray-700 focus:ring-2 focus:ring-blue-500 active:bg-blue-400'
                                 >
-                                    <SidebarMenuButton asChild>
+                                    <SidebarMenuButton asChild className=' active:bg-blue-400'>
                                         <a href={`/categories/${c.name}`}>
                                             <span>{c.name}</span>
                                         </a>
