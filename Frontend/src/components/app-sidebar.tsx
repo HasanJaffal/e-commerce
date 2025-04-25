@@ -4,11 +4,12 @@ import {
     SidebarGroup,
     SidebarGroupContent,
     SidebarGroupLabel,
+    SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { CategoryDto } from '@/interfaces/backend/CategoryDto';
+import { CategoryDto } from '@/interfaces/CategoryDto';
 
 interface Props {
     categories: CategoryDto[];
@@ -16,10 +17,14 @@ interface Props {
 
 export function AppSidebar({ categories }: Props) {
     return (
-        <Sidebar>
+        <Sidebar className='w-[256px]'>
+            <SidebarHeader>
+                <SidebarGroupLabel className='font-bold text-1xl'>
+                    E-Commerce
+                </SidebarGroupLabel>
+            </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel>E-Commerce</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {categories.map((c) => (
@@ -27,7 +32,11 @@ export function AppSidebar({ categories }: Props) {
                                     key={c.id}
                                     className='hover:bg-gray-700 focus:ring-2 focus:ring-blue-500 active:bg-blue-400'
                                 >
-                                    <SidebarMenuButton asChild className=' active:bg-blue-400'>
+                                    <SidebarMenuButton
+                                        asChild
+                                        isActive
+                                        className=' active:bg-blue-400'
+                                    >
                                         <a href={`/categories/${c.name}`}>
                                             <span>{c.name}</span>
                                         </a>

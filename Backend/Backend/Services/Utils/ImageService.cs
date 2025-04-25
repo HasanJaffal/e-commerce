@@ -47,6 +47,5 @@ namespace Backend.Services.Utils
 
             var url = jsonObject["data"]?["url"]?.ToString() ?? string.Empty;
             return url;
-        }
-    }
+        }    }
 }

@@ -5,8 +5,6 @@ using Backend.Models.Domain;
 using Backend.Models.DTOs;
 using Backend.Models.DTOs.Category;
 using Backend.Models.DTOs.Item;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Services.Domain

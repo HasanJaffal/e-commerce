@@ -1,24 +1,23 @@
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
-import { DisplayItem } from '@/interfaces/display/DisplayItem';
+import { ItemDto } from '@/interfaces/ItemDto';
 
 interface Props {
-    displayItem: DisplayItem;
-    className?: string;
+    item: ItemDto
 }
 
-export function AppCard({ displayItem, className }: Props) {
+export function AppCard({ item }: Props) {
     return (
-        <Card className={cn('w-[240px] p-4', className)}>
+        <Card className={cn('w-[240px] p-4')}>
             <CardContent className='flex flex-col items-center space-y-2'>
                 <img
-                    src={displayItem.imageUrl}
-                    alt={displayItem.item.name}
+                    src={item.imageUrl}
+                    alt={item.name}
                     className='w-40 h-40 object-cover rounded-md'
                 />
-                <h2 className='text-lg font-bold'>{displayItem.item.name}</h2>
+                <h2 className='text-lg font-bold'>{item.name}</h2>
                 <p className='text-xl font-bold text-green-600'>
-                    ${displayItem.item.price}
+                    ${item.price}
                 </p>
             </CardContent>
         </Card>

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Backend.Models.Domain;
-using Backend.Models.DTOs;
+
 using Microsoft.AspNetCore.Mvc;
 using Backend.Models.DTOs.Item;
 using Backend.Services.Domain;
@@ -12,12 +12,10 @@ namespace Backend.Controllers
     public class ItemsController : Controller
     {
         private readonly IItemService _service;
-        private readonly IMapper _mapper;
 
-        public ItemsController(IItemService service, IMapper mapper)
+        public ItemsController(IItemService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         [HttpPost("Create")]
@@ -28,9 +26,8 @@ namespace Backend.Controllers
                 return BadRequest(ModelState);
             }
             var createdItem = await _service.CreateItemAsync(createItemDto);
-            var itemDto = _mapper.Map<ItemDto>(createdItem);
 
-            return Ok(itemDto);
+            return Ok(createdItem);
         }
 
         [HttpGet("{id}")]
@@ -41,8 +38,7 @@ namespace Backend.Controllers
             {
                 return NotFound();
             }
-            var dto = _mapper.Map<ItemDto>(item);
-            return Ok(dto);
+            return Ok(item);
         }
 
         [HttpPut("Update/{id}")]
@@ -52,11 +48,8 @@ namespace Backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var item = _mapper.Map<Item>(updateItemDto);
-            item.Id = id;
             var updatedItem = await _service.UpdateItemAsync(id, updateItemDto);
-            var itemDto = _mapper.Map<ItemDto>(updatedItem);
-            return Ok(itemDto);
+            return Ok(updatedItem);
         }
 
         [HttpDelete("Delete/{id}")]

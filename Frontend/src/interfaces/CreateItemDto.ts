@@ -1,6 +1,6 @@
-export interface ItemDto {
-    id: number;
+export interface CreateItemDto {
     name: string;
     price: number;
     categoryId: number;
+    image: File;
 }
