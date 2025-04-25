@@ -6,23 +6,7 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Search",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Page",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "PageSize",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -43,12 +27,17 @@
   },
   {
     "ContainingType": "Backend.Controllers.CategoriesController",
-    "Method": "GetItems",
+    "Method": "GetItemsByCategoryName",
     "RelativePath": "api/Categories/{name}/Items",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      },
       {
         "Name": "Search",
         "Type": "System.String",
@@ -63,11 +52,6 @@
         "Name": "PageSize",
         "Type": "System.Int32",
         "IsRequired": false
-      },
-      {
-        "Name": "name",
-        "Type": "System.String",
-        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -126,27 +110,6 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Backend.Controllers.ImagesController",
-    "Method": "UploadImage",
-    "RelativePath": "api/Images/Upload",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Image",
-        "Type": "Microsoft.AspNetCore.Http.IFormFile",
-        "IsRequired": false
-      },
-      {
-        "Name": "ItemId",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
     "ContainingType": "Backend.Controllers.ItemsController",
     "Method": "GetItemById",
     "RelativePath": "api/Items/{id}",
@@ -164,22 +127,6 @@
   },
   {
     "ContainingType": "Backend.Controllers.ItemsController",
-    "Method": "GetImageByItemId",
-    "RelativePath": "api/Items/{itemId}/image",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "itemId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Backend.Controllers.ItemsController",
     "Method": "CreateItem",
     "RelativePath": "api/Items/Create",
     "HttpMethod": "POST",
@@ -187,9 +134,24 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "createItemDto",
-        "Type": "Backend.Models.DTOs.Item.CreateItemDto",
-        "IsRequired": true
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Price",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "CategoryId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Image",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -224,9 +186,19 @@
         "IsRequired": true
       },
       {
-        "Name": "updateItemDto",
-        "Type": "Backend.Models.DTOs.Item.UpdateItemDto",
-        "IsRequired": true
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Price",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "Image",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

@@ -8,9 +8,9 @@ namespace Backend.MappingProfiles
     {
         public CategoryProfile()
         {
-            CreateMap<CreateCategoryDto, Category>();
-            CreateMap<UpdateCategoryDto, Category>();
-            CreateMap<Category, CategoryDto>();
+            CreateMap<CreateCategoryDto, Category>().ReverseMap();
+            CreateMap<UpdateCategoryDto, Category>().ReverseMap();
+            CreateMap<Category, CategoryDto>().ReverseMap();
         }
     }
 }

@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using Backend.Models.Domain;
 using Backend.Models.DTOs;
 using Backend.Models.DTOs.Category;
 using Backend.Models.DTOs.Item;
-using Backend.Services;
+using Backend.Services.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -13,12 +12,10 @@ namespace Backend.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _service;
-        private readonly IMapper _mapper;
 
         public CategoriesController(ICategoryService service, IMapper mapper)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         [HttpPost("Create")]
@@ -29,47 +26,27 @@ namespace Backend.Controllers
                 return BadRequest(ModelState);
             }
 
-            var category = _mapper.Map<Category>(createCategoryDto);
-            var createdCategory = await _service.CreateCategoryAsync(category);
-            var categoryDto = _mapper.Map<CategoryDto>(createdCategory);
-
-            return Ok(categoryDto);
+            var createdCategory = await _service.CreateCategoryAsync(createCategoryDto);
+            return Ok(createdCategory);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCategories([FromQuery] QueryRequest queryRequest)
+        public async Task<IActionResult> GetCategories()
         {
-            var categoriesResponse = await _service.GetCategoriesAsync(queryRequest);
-            var categories = categoriesResponse.Objects;
-            var dtos = _mapper.Map<IEnumerable<CategoryDto>>(categories);
+            var categoryDtos = await _service.GetCategoriesAsync();
 
-            var finalResponse = new QueryResponse<CategoryDto>
-            {
-                Objects = dtos,
-                TotalCount = categoriesResponse.TotalCount,
-                TotalPages = categoriesResponse.TotalPages,
-                CurrentPage = categoriesResponse.CurrentPage,
-                PageSize = categoriesResponse.PageSize
-            };
-
-            if (finalResponse.Objects.Count() == 0)
-            {
-                return NoContent();
-            }
-
-            return Ok(finalResponse);
+            return Ok(categoryDtos);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {
-            var category = await _service.GetCategoryByIdAsync(id);
-            if (category == null)
+            var categoryDto = await _service.GetCategoryByIdAsync(id);
+            if (categoryDto == null)
             {
                 return NotFound();
             }
-            var dto = _mapper.Map<CategoryDto>(category);
-            return Ok(dto);
+            return Ok(categoryDto);
         }
 
         [HttpPut("Update/{id}")]
@@ -79,10 +56,7 @@ namespace Backend.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var category = _mapper.Map<Category>(updateCategoryDto);
-            category.Id = id;
-            var updatedCategory = await _service.UpdateCategoryAsync(category);
-            var categoryDto = _mapper.Map<CategoryDto>(updatedCategory);
+            var categoryDto = await _service.UpdateCategoryAsync(id, updateCategoryDto);
             return Ok(categoryDto);
         }
 
@@ -98,15 +72,14 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{name}/Items")]
-        public async Task<IActionResult> GetItems([FromQuery] QueryRequest queryRequest, [FromRoute]string name)
+        public async Task<IActionResult> GetItemsByCategoryName([FromRoute] string name, [FromQuery] QueryRequest queryRequest)
         {
-            var itemsResponse = await _service.GetItemsAsync(queryRequest, name);
-            var items = itemsResponse.Objects;
-            var dtos = _mapper.Map<IEnumerable<ItemDto>>(items);
+            var itemsResponse = await _service.GetItemsByCategoryName(name, queryRequest);
+            var itemDtos = itemsResponse.Objects;
 
             var finalResponse = new QueryResponse<ItemDto>
             {
-                Objects = dtos,
+                Objects = itemDtos,
                 TotalCount = itemsResponse.TotalCount,
                 TotalPages = itemsResponse.TotalPages,
                 CurrentPage = itemsResponse.CurrentPage,

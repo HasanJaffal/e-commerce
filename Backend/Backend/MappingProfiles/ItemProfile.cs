@@ -8,9 +8,7 @@ namespace Backend.MappingProfiles
     {
         public ItemProfile()
         {
-            CreateMap<CreateItemDto, Item>();
-            CreateMap<UpdateItemDto, Item>();
-            CreateMap<Item, ItemDto>();
+            CreateMap<Item, ItemDto>().ReverseMap();
         }
     }
 }

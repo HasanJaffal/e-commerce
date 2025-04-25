@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Backend.Models.Domain;
 using Backend.Models.DTOs;
-using Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Backend.Models.DTOs.Item;
-using Backend.Models.DTOs.Image;
+using Backend.Services.Domain;
 
 namespace Backend.Controllers
 {
@@ -22,15 +21,13 @@ namespace Backend.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> CreateItem([FromBody] CreateItemDto createItemDto)
+        public async Task<IActionResult> CreateItem([FromForm] CreateItemDto createItemDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            var item = _mapper.Map<Item>(createItemDto);
-            var createdItem = await _service.CreateItemAsync(item);
+            var createdItem = await _service.CreateItemAsync(createItemDto);
             var itemDto = _mapper.Map<ItemDto>(createdItem);
 
             return Ok(itemDto);
@@ -49,7 +46,7 @@ namespace Backend.Controllers
         }
 
         [HttpPut("Update/{id}")]
-        public async Task<IActionResult> UpdateItem(int id, [FromBody] UpdateItemDto updateItemDto)
+        public async Task<IActionResult> UpdateItem(int id, [FromForm] UpdateItemDto updateItemDto)
         {
             if (!ModelState.IsValid)
             {
@@ -57,7 +54,7 @@ namespace Backend.Controllers
             }
             var item = _mapper.Map<Item>(updateItemDto);
             item.Id = id;
-            var updatedItem = await _service.UpdateItemAsync(item);
+            var updatedItem = await _service.UpdateItemAsync(id, updateItemDto);
             var itemDto = _mapper.Map<ItemDto>(updatedItem);
             return Ok(itemDto);
         }
@@ -71,24 +68,6 @@ namespace Backend.Controllers
                 return NotFound();
             }
             return NoContent();
-        }
-
-        [HttpGet("{itemId}/image")]
-        public async Task<IActionResult> GetImageByItemId(int itemId)
-        {
-            var image = await _service.GetImageByItemIdAsync(itemId);
-            if (image == null)
-            {
-                return Ok(new ImageDto()
-                {
-                    Id = 0,
-                    Url = "https://d1nhio0ox7pgb.cloudfront.net/_img/v_collection_png/512x512/shadow/box_white_surprise.png",
-                    ItemId = itemId
-                });
-            }
-
-            var dto = _mapper.Map<ImageDto>(image);
-            return Ok(dto);
         }
 
     }

@@ -9,7 +9,6 @@ namespace Backend.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Item> Items { get; set; }
-        public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,11 +18,6 @@ namespace Backend.Data
                 .HasMany(c => c.Items)
                 .WithOne(i => i.Category)
                 .HasForeignKey(i => i.CategoryId);
-
-            modelBuilder.Entity<Item>()
-                .HasOne(i => i.Image)
-                .WithOne(img => img.Item)
-                .HasForeignKey<Image>(img => img.ItemId);
         }
     }
 }

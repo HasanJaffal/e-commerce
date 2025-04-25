@@ -1,6 +1,7 @@
 using Backend.Data;
 using Backend.MappingProfiles;
-using Backend.Services;
+using Backend.Services.Domain;
+using Backend.Services.Utils;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +19,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddAutoMapper(typeof(CategoryProfile));
 builder.Services.AddAutoMapper(typeof(ItemProfile));
-builder.Services.AddAutoMapper(typeof(ImageProfile));
 
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddHttpClient<IImageService, ImageService>();

@@ -42,29 +42,6 @@ namespace Backend.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Backend.Models.Domain.Image", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ItemId")
-                        .IsUnique();
-
-                    b.ToTable("Images");
-                });
-
             modelBuilder.Entity("Backend.Models.Domain.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -75,6 +52,10 @@ namespace Backend.Migrations
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -88,17 +69,6 @@ namespace Backend.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Items");
-                });
-
-            modelBuilder.Entity("Backend.Models.Domain.Image", b =>
-                {
-                    b.HasOne("Backend.Models.Domain.Item", "Item")
-                        .WithOne("Image")
-                        .HasForeignKey("Backend.Models.Domain.Image", "ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Backend.Models.Domain.Item", b =>
@@ -115,12 +85,6 @@ namespace Backend.Migrations
             modelBuilder.Entity("Backend.Models.Domain.Category", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("Backend.Models.Domain.Item", b =>
-                {
-                    b.Navigation("Image")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

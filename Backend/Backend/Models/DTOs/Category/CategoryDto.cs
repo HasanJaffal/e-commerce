@@ -1,4 +1,6 @@
-﻿namespace Backend.Models.DTOs.Category
+﻿using Backend.Models.DTOs.Item;
+
+namespace Backend.Models.DTOs.Category
 {
     public class CategoryDto
     {
