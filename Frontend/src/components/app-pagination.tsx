@@ -12,7 +12,6 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from '@radix-ui/react-popover';
-import { useState } from 'react';
 import { Button } from './ui/button';
 
 interface Props {
@@ -25,57 +24,42 @@ interface Props {
 }
 
 export function AppPagination({
-    pageSize,
     page,
     onSetPageSize,
     onNext,
     onPrevious,
-    totalPages
+    totalPages,
 }: Props) {
-    const [paginationParams, setPaginationParams] = useState({
-        page: page,
-        pageSize: pageSize,
-    });
-
     const sizes = [1, 2, 4, 8, 16];
 
     function setPageSize(size: number) {
-        setPaginationParams((paginationParams) => ({
-            ...paginationParams,
-            pageSize: size,
-        }));
         onSetPageSize(size);
     }
+
     function next() {
-        setPaginationParams((paginationParams) => ({
-            ...paginationParams,
-            page: page + 1,
-        }));
         onNext();
     }
+
     function previous() {
         if (page > 1) {
-            setPaginationParams((paginationParams) => ({
-                ...paginationParams,
-                page: page - 1,
-            }));
+            onPrevious();
         }
-        onPrevious();
     }
 
     return (
         <Pagination>
             <PaginationContent>
                 <PaginationItem>
-                    {
-                        paginationParams.page > 1 ? <PaginationPrevious onClick={previous} /> : <></>
-                    }
-                    
+                    {page > 1 ? (
+                        <PaginationPrevious onClick={previous} />
+                    ) : (
+                        <Button onClick={next} disabled>
+                            Previous
+                        </Button>
+                    )}
                 </PaginationItem>
                 <PaginationItem>
-                    <PaginationLink isActive>
-                        {paginationParams.page}
-                    </PaginationLink>
+                    <PaginationLink isActive>{page}</PaginationLink>
                 </PaginationItem>
                 <PaginationItem>
                     <Popover>
@@ -90,7 +74,7 @@ export function AppPagination({
                                         key={s.valueOf()}
                                     >
                                         <Button
-                                        variant="secondary"
+                                            variant='secondary'
                                             className='w-2'
                                             onClick={() => setPageSize(s)}
                                         >
@@ -103,9 +87,13 @@ export function AppPagination({
                     </Popover>
                 </PaginationItem>
                 <PaginationItem>
-                    {
-                        totalPages > page ? <PaginationNext onClick={next} /> : <></>
-                    }
+                    {totalPages > page ? (
+                        <PaginationNext onClick={next} />
+                    ) : (
+                        <Button onClick={next} disabled>
+                            Next
+                        </Button>
+                    )}
                 </PaginationItem>
             </PaginationContent>
         </Pagination>

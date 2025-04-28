@@ -54,7 +54,7 @@ export default function Layout() {
     }, [name, query]);
 
     function setSearchValue(data: string) {
-        setQuery((query) => ({ ...query, search: data }));
+        setQuery((prevQuery) => ({ ...prevQuery, search: data, page: 1 }));
     }
 
     function setPageSize(data: number) {
@@ -85,7 +85,7 @@ export default function Layout() {
                         <CategoryPage items={items} />
                     </div>
                     <div className='flex items-center justify-center mb-2'>
-                        <AppPagination page={query.page} pageSize={query.pageSize} onNext={next} onPrevious={previous} onSetPageSize={setPageSize} totalPages={totalpages}/>
+                        <AppPagination page={(query.page)} pageSize={query.pageSize} onNext={next} onPrevious={previous} onSetPageSize={setPageSize} totalPages={totalpages}/>
                     </div>
                 </main>
             </div>
