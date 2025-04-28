@@ -8,7 +8,7 @@ interface Props {
 
 export function AppCard({ item }: Props) {
     return (
-        <Card className={cn('w-[240px] p-4')}>
+        <Card className={cn('w-[240px] p-4 bg-white')}>
             <CardContent className='flex flex-col items-center space-y-2'>
                 <img
                     src={item.imageUrl}

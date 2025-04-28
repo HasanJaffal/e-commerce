@@ -3,10 +3,10 @@ import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 
 interface Props {
-    onClick: (search: string) => void;
+    setSearchValue: (search: string) => void;
 }
 
-export function AppSearchBar({ onClick }: Props) {
+export function AppSearchBar({ setSearchValue }: Props) {
     const [search, setSearch] = useState<string>('');
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -14,16 +14,16 @@ export function AppSearchBar({ onClick }: Props) {
     }
 
     function handleClick() {
-        onClick(search);
-        setSearch('');
+        setSearchValue(search);
     }
 
     return (
-        <div className='flex w-full max-w items-center space-x-2'>
+        <div className='flex w-1/2 items-center space-x-1'>
             <Input
                 placeholder='SEARCH BY NAME'
                 value={search}
                 onChange={handleChange}
+                className='bg-white'
             />
             <Button onClick={handleClick}>Search</Button>
         </div>

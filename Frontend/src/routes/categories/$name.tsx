@@ -2,8 +2,7 @@ import CategoryPage from '@/app/pages/category-page';
 import { createFileRoute } from '@tanstack/react-router';
 
 const CategoryRouteComponent = () => {
-    const { name } = Route.useParams();
-    return <CategoryPage name={name} />;
+    return <CategoryPage />;
 };
 
 export const Route = createFileRoute('/categories/$name')({
