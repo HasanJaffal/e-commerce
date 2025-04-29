@@ -1,25 +1,50 @@
 import { cn } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
 import { ItemDto } from '@/interfaces/ItemDto';
-import { Trash2 } from 'lucide-react';
-import { Button } from './ui/button';
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+
+import { toast } from 'sonner';
+import UpdateItemForm from './update-item-form';
+import { UpdateItemDto } from '@/interfaces/UpdateItemDto';
+import DeleteForm from './delete-form';
 
 interface Props {
     item: ItemDto;
+    onDelete: (id: number) => void;
+    onUpdate: (id: number, updateItemDto: UpdateItemDto) => void;
 }
 
-export function AppCard({ item }: Props) {
+export function AppCard({ item, onDelete, onUpdate }: Props) {
+    function handleDelete(id: number) {
+        onDelete(id);
+        toast('Item has been deleted', {
+            description: new Date().toLocaleString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true,
+            }),
+        });
+    }
+    function handleUpdate(id: number, updateItemDto: UpdateItemDto) {
+        onUpdate(id, updateItemDto);
+        toast('Item has been updated', {
+            description: new Date().toLocaleString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                hour12: true,
+            }),
+        });
+    }
+
+    
+
     return (
         <Card className={cn('w-[240px] p-4 bg-white')}>
             <CardContent className='flex flex-col items-center space-y-2'>
@@ -33,65 +58,12 @@ export function AppCard({ item }: Props) {
                     ${item.price}
                 </p>
                 <div className='flex flex-row items-center space-x-2'>
-                    {/* EDIT */}
                     <div>
-                        <AlertDialog>
-                            <AlertDialogTrigger>
-                                <Button className='bg-blue-500 hover:black'>
-                                    <Trash2 />
-                                    Edit
-                                </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                                <AlertDialogHeader>
-                                    <AlertDialogTitle>
-                                        Are you absolutely sure?
-                                    </AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                        This action cannot be undone. This will
-                                        permanently delete this item.
-                                    </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                    <AlertDialogCancel>
-                                        Cancel
-                                    </AlertDialogCancel>
-                                    <AlertDialogAction>
-                                        Continue
-                                    </AlertDialogAction>
-                                </AlertDialogFooter>
-                            </AlertDialogContent>
-                        </AlertDialog>
+                        <UpdateItemForm item={item} onUpdate={handleUpdate} />
                     </div>
+
                     <div>
-                        {/* DELETE */}
-                        <AlertDialog>
-                            <AlertDialogTrigger>
-                                <Button variant='destructive' className='hover:bg-black'>
-                                    <Trash2 />
-                                    Delete
-                                </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                                <AlertDialogHeader>
-                                    <AlertDialogTitle>
-                                        Are you absolutely sure?
-                                    </AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                        This action cannot be undone. This will
-                                        permanently delete this item.
-                                    </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                    <AlertDialogCancel>
-                                        Cancel
-                                    </AlertDialogCancel>
-                                    <AlertDialogAction>
-                                        Continue
-                                    </AlertDialogAction>
-                                </AlertDialogFooter>
-                            </AlertDialogContent>
-                        </AlertDialog>
+                        <DeleteForm onDelete={handleDelete} id={item.id} />
                     </div>
                 </div>
             </CardContent>

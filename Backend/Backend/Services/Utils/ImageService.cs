@@ -24,7 +24,7 @@ namespace Backend.Services.Utils
 
             if (image == null || image.Length == 0)
             {
-                throw new ArgumentException("Invalid image file.");
+                return "";
             }
 
             using var memoryStream = new MemoryStream();

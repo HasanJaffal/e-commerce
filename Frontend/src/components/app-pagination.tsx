@@ -47,7 +47,7 @@ export function AppPagination({
     }
 
     return (
-        <Pagination>
+        <Pagination className='h-[5rem]'>
             <PaginationContent>
                 <PaginationItem>
                     {page > 1 ? (
@@ -66,16 +66,15 @@ export function AppPagination({
                         <PopoverTrigger asChild>
                             <PaginationEllipsis />
                         </PopoverTrigger>
-                        <PopoverContent className='w-80 mb-2'>
-                            <div className='grid p-1 grid-rows-1 grid-cols-5'>
+                        <PopoverContent className='w-80 mb-5'>
+                            <div className='grid p-1 grid-rows-1 grid-cols-5 gap-1'>
                                 {sizes.map((s) => (
                                     <div
                                         className='space-y-2'
                                         key={s.valueOf()}
                                     >
                                         <Button
-                                            variant='secondary'
-                                            className='w-2'
+                                            className='w-2 hover:bg-white hover:text-black'
                                             onClick={() => setPageSize(s)}
                                         >
                                             {s}

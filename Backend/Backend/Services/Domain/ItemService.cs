@@ -49,13 +49,22 @@ namespace Backend.Services.Domain
 
         public async Task<ItemDto> UpdateItemAsync(int id, UpdateItemDto updateItemDto)
         {
+
             var item = await _context.Items.FindAsync(id);
             if (item == null)
             {
                 throw new KeyNotFoundException("Item not found.");
             }
-            string imageUrl = await _imageService.UploadImageAsync(updateItemDto.Image);
-            item.Name = updateItemDto.Name;
+            string imageUrl;
+            if (updateItemDto.Image != null)
+            {
+                imageUrl = await _imageService.UploadImageAsync(updateItemDto.Image);
+            } else
+            {
+                imageUrl = item.ImageUrl;
+            }
+
+                item.Name = updateItemDto.Name;
             item.Price = updateItemDto.Price;
             item.ImageUrl = imageUrl;
             await _context.SaveChangesAsync();

@@ -10,6 +10,10 @@ import { QueryResponse } from '@/interfaces/QueryResponse';
 import { useParams } from '@tanstack/react-router';
 import { QueryRequest } from '@/interfaces/QueryRequest';
 import { AppPagination } from '@/components/app-pagination';
+import { Toaster } from 'sonner';
+import { UpdateItemDto } from '@/interfaces/UpdateItemDto';
+import { Button } from '@/components/ui/button';
+import AddItemForm from '@/components/add-item-form';
 
 export default function Layout() {
     const { name } = useParams({ strict: false }); // <-- this grabs /categories/:name
@@ -19,9 +23,9 @@ export default function Layout() {
     const [query, setQuery] = useState<QueryRequest>({
         search: '',
         page: 1,
-        pageSize: 2,
+        pageSize: 16,
     });
-    const [totalpages, setTotalPages] =useState<number>(100);
+    const [totalpages, setTotalPages] = useState<number>(100);
 
     useEffect(() => {
         axios
@@ -40,11 +44,11 @@ export default function Layout() {
                 const response = await axios.get<QueryResponse<ItemDto>>(
                     `https://localhost:7206/api/Categories/${name}/Items`,
                     {
-                        params: query
+                        params: query,
                     },
                 );
                 setItems(response.data.objects);
-                setTotalPages(response.data.totalPages)
+                setTotalPages(response.data.totalPages);
             } catch (error) {
                 console.error('Error fetching items:', error);
                 setItems([]);
@@ -53,22 +57,60 @@ export default function Layout() {
         fetchItems();
     }, [name, query]);
 
+    async function deleteItem(id: number) {
+        try {
+            await axios.delete(`https://localhost:7206/api/Items/Delete/${id}`);
+            setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+        } catch (error) {
+            console.error('Failed to delete item: ', error);
+        }
+    }
+
+    async function updateItem(id: number, updateItemDto: UpdateItemDto) {
+        try {
+            const formData = new FormData();
+            formData.append('name', updateItemDto.name);
+            formData.append('price', updateItemDto.price.toString());
+            if (updateItemDto.image) {
+                formData.append('image', updateItemDto.image);
+            }
+
+            await axios.put(
+                `https://localhost:7206/api/Items/Update/${id}`,
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                },
+            );
+
+            const refreshed = await axios.get<QueryResponse<ItemDto>>(
+                `https://localhost:7206/api/Categories/${name}/Items`,
+                { params: query },
+            );
+            setItems(refreshed.data.objects);
+        } catch (error) {
+            console.error('Failed to update item: ', error);
+        }
+    }
+
     function setSearchValue(data: string) {
         setQuery((prevQuery) => ({ ...prevQuery, search: data, page: 1 }));
     }
 
     function setPageSize(data: number) {
-        setQuery( query => ({ ...query, pageSize: data }));
-        console.log(query)
+        setQuery((prevQuery) => ({ ...prevQuery, pageSize: data }));
+        console.log(query);
     }
     function next() {
-        setQuery(query => ({ ...query, page: query.page + 1}));
-        console.log(query)
+        setQuery((prevQuery) => ({ ...prevQuery, page: query.page + 1 }));
+        console.log(query);
     }
     function previous() {
         if (query.page > 1) {
-            setQuery(query => ({ ...query, page: query.page -1 }));
-            console.log(query)
+            setQuery((prevQuery) => ({ ...prevQuery, page: query.page - 1 }));
+            console.log(query);
         }
     }
 
@@ -78,16 +120,30 @@ export default function Layout() {
                 <AppSidebar categories={categories} />
                 <main className='flex-1 overflow-auto'>
                     <SidebarTrigger />
-                    <div className='flex items-center justify-center mb-2'>
+                    <div className='flex items-center justify-center mb-2 gap-3'>
+                        <AddItemForm categories={categories}/>
+                        <Button variant='outline'>ADD ITEM</Button>
                         <AppSearchBar setSearchValue={setSearchValue} />
                     </div>
-                    <div className='flex items-center justify-center mb-2'>
-                        <CategoryPage items={items} />
+                    <div className='flex items-center justify-center'>
+                        <CategoryPage
+                            items={items}
+                            onDelete={deleteItem}
+                            onUpdate={updateItem}
+                        />
                     </div>
-                    <div className='flex items-center justify-center mb-2'>
-                        <AppPagination page={(query.page)} pageSize={query.pageSize} onNext={next} onPrevious={previous} onSetPageSize={setPageSize} totalPages={totalpages}/>
+                    <div className='flex items-center justify-center  pt-[5rem]'>
+                        <AppPagination
+                            page={query.page}
+                            pageSize={query.pageSize}
+                            onNext={next}
+                            onPrevious={previous}
+                            onSetPageSize={setPageSize}
+                            totalPages={totalpages}
+                        />
                     </div>
                 </main>
+                <Toaster />
             </div>
         </SidebarProvider>
     );
